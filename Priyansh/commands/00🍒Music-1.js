@@ -1,30 +1,3 @@
-const axios = require("axios");
-const yts = require("yt-search");
-
-const baseApiUrl = async () => {
-    const base = await axios.get(`https://raw.githubusercontent.com/Mostakim0978/D1PT0/refs/heads/main/baseApiUrl.json`);
-    return base.data.api;
-};
-
-(async () => {
-    global.apis = {
-        diptoApi: await baseApiUrl()
-    };
-})();
-
-// Local stream fetch function
-async function getStreamFromURL(url, pathName) {
-    const response = await axios.get(url, { responseType: "stream" });
-    response.data.path = pathName;
-    return response.data;
-}
-
-function getVideoID(url) {
-    const regex = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))((\w|-){11})(?:\S+)?$/;
-    const match = url.match(regex);
-    return match ? match[1] : null;
-}
-
 module.exports.config = {
     name: "music",
     version: "1.1.0",
@@ -57,8 +30,9 @@ module.exports.run = async function({ api, args, event }) {
             videoID = selected.videoId;
         }
 
-        // Change format to mp3
-        const { data: { title, quality, downloadLink } } = await axios.get(`${global.apis.diptoApi}/ytDl3?link=${videoID}&format=mp3`);
+                                                    
+        const { data: { title, downloadLink } } = await axios.get(`// Change format to mp3 with 128kbps quality
+        const { data: { title, downloadLink } } = await axios.get(`${global.apis.diptoApi}/ytDl3?link=${videoID}&format=mp3&quality=128kbps`);
 
         if (searchMsg?.messageID) api.unsendMessage(searchMsg.messageID);
 
