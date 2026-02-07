@@ -109,7 +109,7 @@ module.exports.run = async function ({ api, event, Users }) {
 ╚═══❖••° °••❖═══╝
 
    ✶⊶⊷⊷❍⊶⊷⊷✶
-   ┏━━━━━━━━━━━━━┓  ${name1} ┗━━━━━━━━━━━━━━━━┛.         ┏━━━━━━━━━━━━━━━━┓     ${name2}┗━━━━━━━━━━━━━┛`,
+   ┏━━━━━━━━━━━━━┓  ${name1} ┗━━━━━━━━━━━━━┛        ┏━━━━━━━━━━━━━┓     ${name2}┗━━━━━━━━━━━━━┛`,
       mentions: [{ id: id2, tag: name2 }],
       attachment: fs.createReadStream(outPath)
     },
