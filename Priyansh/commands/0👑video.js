@@ -1,76 +1,123 @@
 const axios = require("axios");
 const yts = require("yt-search");
 
+/* 🔐 Credits Lock */
+function checkCredits() {
+  if (module.exports.config.credits !== "ARIF-BABU") {
+    throw new Error("❌ Credits Locked By ARIF-BABU");
+  }
+}
+
+/* 🎞 Loading Frames */
+const frames = [
+  "❤️ Video Searching..............100%"
+];
+
+/* 🌐 API */
 const baseApiUrl = async () => {
-    const base = await axios.get(`https://raw.githubusercontent.com/Mostakim0978/D1PT0/refs/heads/main/baseApiUrl.json`);
-    return base.data.api;
+  const res = await axios.get(
+    "https://raw.githubusercontent.com/Mostakim0978/D1PT0/refs/heads/main/baseApiUrl.json"
+  );
+  return res.data.api;
 };
 
 (async () => {
-    global.apis = {
-        diptoApi: await baseApiUrl()
-    };
+  global.apis = { diptoApi: await baseApiUrl() };
 })();
 
-// Local stream fetch function
-async function getStreamFromURL(url, pathName) {
-    const response = await axios.get(url, { responseType: "stream" });
-    response.data.path = pathName;
-    return response.data;
+async function getStreamFromURL(url, name) {
+  const res = await axios.get(url, { responseType: "stream" });
+  res.data.path = name;
+  return res.data;
 }
 
 function getVideoID(url) {
-    const regex = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))((\w|-){11})(?:\S+)?$/;
-    const match = url.match(regex);
-    return match ? match[1] : null;
+  const r =
+    /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/))([\w-]{11})/;
+  const m = url.match(r);
+  return m ? m[1] : null;
 }
 
+/* ⚙ CONFIG */
 module.exports.config = {
-    name: "video",
-    version: "1.1.0",
-    credits: "virat saini",
-    hasPermssion: 0,
-    cooldowns: 5,
-    description: "YouTube video ko URL ya name se MP4 me download karein",
-    commandCategory: "media",
-    usages: "[YouTube URL ya song ka naam]"
+  name: "music",
+  version: "1.3.5",
+  credits: "virat",
+  hasPermssion: 0,
+  cooldowns: 5,
+  description: "YouTube MP4 Downloader",
+  commandCategory: "media",
+  usages: "song <name | link>"
 };
 
-module.exports.run = async function({ api, args, event }) {
-    try {
-        let videoID, searchMsg;
-        const url = args[0];
+/* ================= PREFIX ONLY ================= */
+module.exports.run = async function ({ api, args, event }) {
+  try {
+    checkCredits();
 
-        if (url && (url.includes("youtube.com") || url.includes("youtu.be"))) {
-            videoID = getVideoID(url);
-            if (!videoID) {
-                return api.sendMessage("❌ Galat YouTube URL!", event.threadID, event.messageID);
-            }
-        } else {
-            const query = args.join(" ");
-            if (!query) return api.sendMessage("❌ Song ka naam ya YouTube link do!", event.threadID, event.messageID);
-
-            searchMsg = await api.sendMessage(`🔍 Searching: "${query}"`, event.threadID);
-            const result = await yts(query);
-            const videos = result.videos.slice(0, 30);
-            const selected = videos[Math.floor(Math.random() * videos.length)];
-            videoID = selected.videoId;
-        }
-
-        // Change format to mp4
-        const { data: { title, quality, downloadLink } } = await axios.get(`${global.apis.diptoApi}/ytDl3?link=${videoID}&format=mp4`);
-
-        if (searchMsg?.messageID) api.unsendMessage(searchMsg.messageID);
-
-        const shortLink = (await axios.get(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(downloadLink)}`)).data;
-
-        return api.sendMessage({
-            body: `🎵 Title: ${title}\n📥 Download: ${shortLink}`,
-            attachment: await getStreamFromURL(downloadLink, `${title}.mp4`)
-        }, event.threadID, event.messageID);
-
-    } catch (err) {
-        console.error(err);
-        return api.sendMessage("⚠️ Error: " + (err.message || "Kuch galat ho gaya!"), event.threadID, event.messageID);
+    if (!args[0]) {
+      return api.sendMessage(
+        "❌ Song ka naam ya YouTube link do",
+        event.threadID,
+        event.messageID
+      );
     }
+
+    const input = args.join(" ");
+
+    const loading = await api.sendMessage(
+      "🔍 Processing..............",
+      event.threadID
+    );
+
+    for (const f of frames) {
+      await new Promise(r => setTimeout(r, 400));
+      await api.editMessage(f, loading.messageID);
+    }
+
+    let videoID;
+
+    if (input.includes("youtu")) {
+      videoID = getVideoID(input);
+      if (!videoID) throw new Error("Invalid URL");
+    } else {
+      const res = await yts(input);
+      videoID = res.videos[0]?.videoId;
+      if (!videoID) throw new Error("No result");
+    }
+
+    const { data } = await axios.get(
+      `${global.apis.diptoApi}/ytDl3?link=${videoID}&format=mp4`
+    );
+
+    const short = (
+      await axios.get(
+        `https://tinyurl.com/api-create.php?url=${encodeURIComponent(
+          data.downloadLink
+        )}`
+      )
+    ).data;
+
+    api.unsendMessage(loading.messageID);
+
+    return api.sendMessage(
+      {
+        body: `🎬 ${data.title}\n🔗 ${short}`,
+        attachment: await getStreamFromURL(
+          data.downloadLink,
+          `${data.title}.mp4`
+        )
+      },
+      event.threadID,
+      event.messageID
+    );
+
+  } catch (err) {
+    console.error(err);
+    return api.sendMessage(
+      "⚠️ Server busy ya API down 😢",
+      event.threadID,
+      event.messageID
+    );
+  }
 };
