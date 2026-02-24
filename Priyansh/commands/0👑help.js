@@ -107,7 +107,7 @@ const first = numberOfOnePage * page - numberOfOnePage;
 
     const siu = `★𝗖𝗼𝗺𝗺𝗮𝗻𝗱 𝗟𝗶𝘀𝘁★\n━━━━━━━━━━━━━━━━`;
 
- const text = `\n𝐏𝐀𝐆𝐄 (${page}/${Math.ceil(arrayInfo.length/numberOfOnePage)})\nFor All Cmds Type Help2\n━━━━━━━━━━━━━━━━\n「 𓆩⃝VIRAT SAINI𓆩๏𓆪 」`;
+ const text = `\n𝐏𝐀𝐆𝐄 (${page}/${Math.ceil(arrayInfo.length/numberOfOnePage)})\nFor All Cmds Type Help2\n━━━━━━━━━━━━━━━━\n「 𓆩⃝YASH THAKUR𓆩๏𓆪 」`;
     var link = [
 "https://i.imgur.com/a7kd3ov.jpeg"
       ]
