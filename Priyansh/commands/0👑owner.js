@@ -3,7 +3,7 @@ module.exports.config = {
 	name: "owner",
     version: "1.0.1",
 	hasPermssion: 0,
-	credits: "virat saini", 
+	credits: "YASH THAKUR", 
 	description: "no prefix",
 	commandCategory: "No command marks needed",
 	usages: "...",
@@ -18,7 +18,7 @@ module.exports.handleEvent = function({ api, event, client, __GLOBAL }) {
 react.includes("prefix")) {
 		var msg = {
 				body: "★𝗢𝘄𝗻𝗲𝗿 + 𝗠𝗮𝗱𝗲 𝗕𝘆 ★\n\n✦🌸===『*★🌸✦\n\n ✦𝐅𝐞𝐜𝐞𝐛𝐨𝐨𝐤 𝐥𝐢𝐧𝐤\n 𝐌𝐞𝐫𝐞 𝐛𝐨𝐬𝐬 𝐤𝐚 𝐋𝐢𝐧𝐤😁😋 \n\n https://www.facebook.com/profile.php?id=61587312556844",
-				attachment: fs.createReadStream(__dirname + `/noprefix/owner.jpg`)
+				attachment: fs.createReadStream(__dirname + `/https://imgbb.com/`)
 			}
 			api.sendMessage(msg, threadID, messageID);
     api.setMessageReaction("📷", event.messageID, (err) => {}, true)
