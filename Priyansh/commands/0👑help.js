@@ -109,7 +109,7 @@ const first = numberOfOnePage * page - numberOfOnePage;
 
  const text = `\n𝐏𝐀𝐆𝐄 (${page}/${Math.ceil(arrayInfo.length/numberOfOnePage)})\nFor All Cmds Type Help2\n━━━━━━━━━━━━━━━━\n「 𓆩⃝YASH THAKUR𓆩๏𓆪 」`;
     var link = [
-"https://i.imgur.com/a7kd3ov.jpeg"
+"https://imgbb.com/"
       ]
      var callback = () => api.sendMessage({ body: siu + "\n\n" + msg  + text, attachment: fs.createReadStream(__dirname + "/cache/leiamnashelp.jpg")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/leiamnashelp.jpg"), event.messageID);
     return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname + "/cache/leiamnashelp.jpg")).on("close", () => callback());
