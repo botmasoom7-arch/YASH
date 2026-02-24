@@ -57,7 +57,7 @@ function buildMessage(time, text) {
 ${text}
 
 ━━━━━━━━━━━━━━━
-𝐌𝐚𝐝𝐞 𝐁𝐲 ❤️‍🔥 𝐕𝐢𝐫𝐚𝐭 𝐬𝐚𝐢𝐧𝐢 `;
+𝐌𝐚𝐝𝐞 𝐁𝐲 ❤️‍🔥 👑⃝YASH THAKUR💋🦋 `;
     var link = [
 "https://i.imgur.com/a7kd3ov.jpeg"
       ]
