@@ -31,7 +31,7 @@ if ((event.body.toLowerCase() == "koi h kya") || (event.body.toLowerCase() == "k
      };
 
      if ((event.body.toLowerCase() == "YASH BABY") || (event.body.toLowerCase() == "babu")) {
-       return api.sendMessage("️𝐡𝐚𝐧 𝐣𝐣 𝐁𝐎𝐋𝐋𝐎 YASH 𝐉𝐀𝐀𝐍🙈", threadID);
+       return api.sendMessage("️𝐡𝐚𝐧 𝐣𝐣 𝐁𝐎𝐋𝐋𝐎 YASH KI DEWANI🙈", threadID);
      };
 
      if ((event.body.toLowerCase() == "jaan") || (event.body.toLowerCase() == "janu")) {
