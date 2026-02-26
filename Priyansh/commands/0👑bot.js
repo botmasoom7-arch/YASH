@@ -35,7 +35,7 @@ if ((event.body.toLowerCase() == "koi h kya") || (event.body.toLowerCase() == "k
      };
 
      if ((event.body.toLowerCase() == "jaan") || (event.body.toLowerCase() == "janu")) {
-       return api.sendMessage("Aww🥰 Yes My YASH LoVe", threadID);
+       return api.sendMessage("AwwYes My YASH LoVe", threadID);
      };
 
      if ((event.body.toLowerCase() == "YASH") || (event.body.toLowerCase() == "THOR")) {
